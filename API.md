@@ -17,17 +17,52 @@ changed in a future release.
 
 ## Sakai Information ##
 
-`/sakai/beans`:
+`/sakai/beans`: Lists all Spring beans available in the system by bean ID. eg:
+
+    $ curl http://localhost:8080/sakai-status/sakai/beans
+    AssessmentFacadeQueries
+    AssessmentGradingFacadeQueries
+    ....
+    org.sakaiproject.authz.api.AuthzGroupService
+    org.sakaiproject.authz.api.FunctionManager
+    org.sakaiproject.authz.api.GroupProvider
+    ....
+    org.sakaiproject.site.api.SiteService
+    org.sakaiproject.site.impl.SiteServiceSqlDefault
+    ....
 
 `/sakai/cache`:
 
 `/sakai/cache/<cache-name>`:
 
-`/sakai/database`:
+`/sakai/database`: Lists current active and idle database connections, eg:
 
-`/sakai/functions`:
+    $ curl http://localhost:8080/sakai-status/sakai/database
+    2,18
 
-`/sakai/properties`:
+`/sakai/functions`: Lists all registered functions, eg:
+
+    $ curl http://localhost:8080/sakai-status/sakai/functions
+    alias.add
+    alias.del
+    alias.upd
+    annc.all.groups
+    annc.delete.any
+    ....
+
+`/sakai/properties`: Lists all sakai properties known to Server Configuration
+Service and their effective values. Attempts to mask password fields (though
+other sensitive fields, eg BasicLTI shared secrets, likely will not be masked).
+Note that Spring properties (formatted as `field@bean-id`) do *not* report the
+current value of that property on that bean, only what the Server Configuration
+Service read in from the `sakai.properties` file. eg:
+
+    $ curl http://localhost:8080/sakai-status/sakai/properties
+    accessPath=/access
+    activeInactiveUser=true
+    archive.toolproperties.excludefilter=password|secret
+    assignment.letterGradeOptions=A,A-,B+,B,B-,C+,C,C-,D+,D,D-,F
+    auto.ddl=false
 
 `/sakai/sessions`:
 
@@ -39,9 +74,39 @@ changed in a future release.
 
 `/sakai/sessions/all-users`:
 
-`/sakai/tools`:
+`/sakai/tools`: Lists all tool registrations known to Sakai, eg:
 
-`/sakai/tools/<tool-registration>`:
+    $ curl https://localhost:8080/sakai-status/sakai/tools
+    osp.assign
+    osp.audience
+    osp.evaluation
+    ....
+    sakai.siteinfo
+    sakai.sites
+    sakai.sitesetup
+    ....
+
+`/sakai/tools/<tool-registration>`: Lists details about the registration of
+a particular tool provided in the URL, formatted in a probably-not-entirely-
+compliant-YAML format, eg:
+
+    $ curl https://localhost:8080/sakai-status/sakai/tools/sakai.schedule
+    id: sakai.schedule
+    title: Calendar
+    description: For posting and viewing deadlines, events, etc.
+    registered_properties:
+      calendar: 
+      functions.require: calendar.read
+      groupAware: true
+    mutable_properties:
+      calendar: 
+      functions.require: calendar.read
+      groupAware: true
+    categories:
+      - course
+      - project
+      - myworkspace
+      - portfolio
 
 ## JVM Information ##
 
