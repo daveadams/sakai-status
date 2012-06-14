@@ -31,9 +31,34 @@ changed in a future release.
     org.sakaiproject.site.impl.SiteServiceSqlDefault
     ....
 
-`/sakai/cache`:
+`/sakai/cache`: Lists all current caches by name, eg:
 
-`/sakai/cache/<cache-name>`:
+    $ curl http://localhost:8080/sakai-status/sakai/cache
+    memory.org.sakaiproject.user.api.UserDirectoryService.callCache
+    org.hibernate.cache.StandardQueryCache
+    org.hibernate.cache.UpdateTimestampsCache
+    org.sakaiproject.alias.api.AliasService.callCache
+    ....
+
+`/sakai/cache/<cache-name>`: Lists property settings for individual cache
+specified, eg:
+
+    $ curl http.../sakai/cache/org.sakaiproject.authz.api.SecurityService.cache
+    name: org.sakaiproject.authz.api.SecurityService.cache
+    memory: 0
+    objects: 79047
+    maxobjects: 100000
+    time-to-live: 600
+    time-to-idle: 600
+    eviction-policy: LRU
+    eternal: false
+    overflow-to-disk: false
+    evictions: 310740
+    latency: 0.0012587117
+    hits: 32565043
+    misses: 2794867
+    total: 35359910
+    hitratio: 92%
 
 `/sakai/database`: Lists current active and idle database connections, eg:
 
