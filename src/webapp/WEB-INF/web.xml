@@ -3,7 +3,7 @@
          xsi:schemaLocation="http:/java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <servlet>
     <servlet-name>server-status</servlet-name>
-    <servlet-class>edu.vt.lt.scholar.status.StatusServlet</servlet-class>
+    <servlet-class>org.sakaiproject.status.StatusServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
